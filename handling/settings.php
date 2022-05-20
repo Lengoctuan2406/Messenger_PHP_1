@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+//chưa đăng nhập thì phải đăng nhập
 if (strlen($_SESSION['account_id'] == 0)) {
     header('location:signin.php');
 }
@@ -40,7 +41,7 @@ if (isset($_POST['change_pass'])) {
             $num = mysqli_fetch_array($ret);
             if ($num > 0) {
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
-                $currentTime = date('Y-m-d', time());
+                $currentTime = date('Y-m-d H:i:s', time());
                 $ret1 = mysqli_query($con, "UPDATE accounts SET password='" . $new_password . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
                 if ($ret1) {
                     echo "<script>alert('Cập nhật mật khẩu thành công!');</script>";
@@ -120,7 +121,7 @@ if (isset($_POST['social'])) {
     }
     if ($allowUpload) {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $currentTime = date('Y-m-d', time());
+        $currentTime = date('Y-m-d H:i:s', time());
         $ret = mysqli_query($con, "UPDATE accounts SET twitter='" . $twitter . "', facebook='" . $facebook .
                 "', instagram='" . $instagram . "', github='" . $github . "', slack='" . $slack . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
         if ($ret) {
@@ -139,12 +140,12 @@ if (isset($_POST['change_info'])) {
     $bio = $_POST['bio'];
 
     $allowUpload = true;
-    // kiểm tra dữ liệu ảnh đã upload chưa
-    if (strlen($_FILES["fileupload"]["name"])==0) {
+    //kiểm tra dữ liệu ảnh đã upload chưa
+    if (strlen($_FILES["fileupload"]["name"]) == 0) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             if (preg_match('/^[0-9]+$/', $phone)) {
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
-                $currentTime = date('Y-m-d', time());
+                $currentTime = date('Y-m-d H:i:s', time());
                 $ret = mysqli_query($con, "UPDATE accounts SET account_name='" . $account_name . "', avatar='" . $file . "', "
                         . "phone='" . $phone . "', email='" . $email . "', bio='" . $bio . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
                 if ($ret) {
@@ -168,10 +169,10 @@ if (isset($_POST['change_info'])) {
         //Lấy phần mở rộng của file (jpg, png, ...)
         $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
-        // Cỡ lớn nhất được upload (bytes)
+        //Cỡ lớn nhất được upload (bytes)
         $maxfilesize = 3000000;
 
-        ////Những loại file được phép upload
+        //Những loại file được phép upload
         $allowtypes = array('jpg', 'png', 'jpeg', 'gif');
 
         //Kiểm tra xem có phải là ảnh bằng hàm getimagesize
@@ -184,26 +185,26 @@ if (isset($_POST['change_info'])) {
             $allowUpload = false;
         }
 
-        // Kiểm tra nếu file đã tồn tại thì không cho phép ghi đè
-        // Bạn có thể phát triển code để lưu thành một tên file khác
+        //Kiểm tra nếu file đã tồn tại thì không cho phép ghi đè
+        //Bạn có thể phát triển code để lưu thành một tên file khác
         if (file_exists($target_file)) {
             echo "<script>alert('Tên file đã tồn tại trên server, không được ghi đè!');</script>";
             $allowUpload = false;
         }
-        // Kiểm tra kích thước file upload cho vượt quá giới hạn cho phép
+        //Kiểm tra kích thước file upload cho vượt quá giới hạn cho phép
         if ($_FILES["fileupload"]["size"] > $maxfilesize) {
             echo "<script>alert('Không được upload ảnh lớn hơn 3mb!');</script>";
             $allowUpload = false;
         }
 
-        // Kiểm tra kiểu file
+        //Kiểm tra kiểu file
         if (!in_array($imageFileType, $allowtypes)) {
             echo "<script>alert('Chỉ được upload các định dạng JPG, PNG, JPEG, GIF!');</script>";
             $allowUpload = false;
         }
 
         if ($allowUpload) {
-            // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
+            //Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
             if (move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file)) {
                 //xóa đường dẫn file ảnh hiện tại
                 $ret1 = mysqli_query($con, "SELECT * FROM accounts WHERE account_id='" . $_SESSION['account_id'] . "';");
@@ -213,7 +214,7 @@ if (isset($_POST['change_info'])) {
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                     if (preg_match('/^[0-9]+$/', $phone)) {
                         date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $currentTime = date('Y-m-d', time());
+                        $currentTime = date('Y-m-d H:i:s', time());
                         $ret = mysqli_query($con, "UPDATE accounts SET account_name='" . $account_name . "', avatar='" . basename($_FILES["fileupload"]["name"]) . "', "
                                 . "phone='" . $phone . "', email='" . $email . "', bio='" . $bio . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
                         if ($ret) {
@@ -236,5 +237,5 @@ if (isset($_POST['change_info'])) {
     }
 }
 
-// query bảng accounts
+//query bảng accounts
 $query_user = mysqli_query($con, "SELECT * FROM accounts WHERE account_id='" . $_SESSION['account_id'] . "';");

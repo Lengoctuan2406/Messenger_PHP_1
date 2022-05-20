@@ -23,7 +23,7 @@ include('handling/signup.php');
                         <!-- Text -->
                         <p class="text-center mb-6">Chào mừng đến với Messenger</p>
                         <!-- Form -->
-                        <form class="mb-6">
+                        <form class="mb-6" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <!-- Name -->
                             <div class="form-group">
                                 <label for="name" class="sr-only">Tên của bạn</label>

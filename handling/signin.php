@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$_SESSION['demo']='template.min.css';
+$_SESSION['demo'] = 'template.min.css';
 include('database/connect.php');
 
 // code của login
@@ -21,8 +21,9 @@ if (isset($_POST['login'])) {
         $num = mysqli_fetch_array($ret);
         if ($num > 0) {
             $_SESSION['account_id'] = $num['account_id'];
-            $_SESSION['account_name'] = $num['account_name'];
-            $ret1 = mysqli_query($con, "UPDATE accounts SET account_status=2 WHERE account_id='" . $_SESSION['account_id'] . "';");
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $currentTime = date('Y-m-d H:i:s', time());
+            $ret1 = mysqli_query($con, "UPDATE accounts SET status_id=2, modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
             header("location:index.php");
         } else {
             echo "<script>alert('Mật khẩu hoặc tài khoản không chính xác!');</script>";
