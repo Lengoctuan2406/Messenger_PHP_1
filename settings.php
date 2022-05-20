@@ -205,8 +205,8 @@ include('handling/settings.php');
                                                     <div class="row no-gutters align-items-center">
                                                         <!-- Title -->
                                                         <div class="col">
-                                                            <h5>Security</h5>
-                                                            <p>Update your profile details.</p>
+                                                            <h5>Bảo mật</h5>
+                                                            <p>Cập nhật mật khẩu của bạn</p>
                                                         </div>
 
                                                         <!-- Icon -->
@@ -220,22 +220,22 @@ include('handling/settings.php');
                                                 <div class="card-body">
                                                     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                                         <div class="form-group">
-                                                            <label class="small" for="current-password">Current password</label>
-                                                            <input name="current-password" id="current-password" type="password" class="form-control form-control-lg" placeholder="Current password">
+                                                            <label class="small" for="current-password">Mật khẩu hiện tại</label>
+                                                            <input name="current-password" id="current-password" type="password" class="form-control form-control-lg" placeholder="Mật khẩu hiện tại">
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="small" for="new-password">New password</label>
-                                                            <input name="new-password" id="new-password" type="password" class="form-control form-control-lg" placeholder="New password">
+                                                            <label class="small" for="new-password">Mật khẩu mới</label>
+                                                            <input name="new-password" id="new-password" type="password" class="form-control form-control-lg" placeholder="Mật khẩu mới">
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="small" for="verify-password">Verify password</label>
-                                                            <input name="verify-password" id="verify-password" type="password" class="form-control form-control-lg" placeholder="Verify password">
+                                                            <label class="small" for="verify-password">Xác nhận mật khẩu mới</label>
+                                                            <input name="verify-password" id="verify-password" type="password" class="form-control form-control-lg" placeholder="Xác nhận mật khẩu mới">
                                                         </div>
 
                                                         <button class="btn btn-lg btn-primary btn-block" type="submit" name="change_pass">
-                                                            Change Password
+                                                            Cập nhật
                                                         </button>
                                                     </form>
                                                 </div>
@@ -250,10 +250,9 @@ include('handling/settings.php');
                                                     <div class="row no-gutters align-items-center">
                                                         <!-- Title -->
                                                         <div class="col">
-                                                            <h5>Social</h5>
-                                                            <p>Update your profile details.</p>
+                                                            <h5>Mạng xã hội</h5>
+                                                            <p>Cập nhật mạng xã hội của bạn</p>
                                                         </div>
-
                                                         <!-- Icon -->
                                                         <div class="col-auto">
                                                             <i class="text-muted icon-md fe-share-2"></i>
@@ -261,78 +260,80 @@ include('handling/settings.php');
                                                     </div>
                                                 </a>
                                             </div>
-
                                             <div id="profile-settings-social" class="collapse" data-parent="#profile-settings">
                                                 <div class="card-body">
-
-                                                    <form action="#">
-                                                        <!-- Twitter -->
-                                                        <div class="form-group">
-                                                            <label class="small" for="profile-twitter">Twitter</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="btn btn-ico btn-secondary btn-minimal">
-                                                                        <i class="fe-twitter"></i>
+                                                    <?php
+                                                    while ($result = mysqli_fetch_array($query_user)) {
+                                                        ?>
+                                                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                                            <!-- Twitter -->
+                                                            <div class="form-group">
+                                                                <label class="small" for="profile-twitter">Twitter</label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="btn btn-ico btn-secondary btn-minimal">
+                                                                            <i class="fe-twitter"></i>
+                                                                        </div>
                                                                     </div>
+                                                                    <input name="twitter" id="profile-twitter" type="text" class="form-control form-control-lg" placeholder="Nhập Twitter của bạn" aria-label="Username" value="<?php echo $result['twitter']; ?>">
                                                                 </div>
-                                                                <input id="profile-twitter" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
                                                             </div>
-                                                        </div>
 
-                                                        <!-- Facebook -->
-                                                        <div class="form-group">
-                                                            <label class="small" for="profile-facebook">Facebook</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="btn btn-ico btn-secondary btn-minimal">
-                                                                        <i class="fe-facebook"></i>
+                                                            <!-- Facebook -->
+                                                            <div class="form-group">
+                                                                <label class="small" for="profile-facebook">Facebook</label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="btn btn-ico btn-secondary btn-minimal">
+                                                                            <i class="fe-facebook"></i>
+                                                                        </div>
                                                                     </div>
+                                                                    <input name="facebook" id="profile-facebook" type="text" class="form-control form-control-lg" placeholder="Nhập Facebook của bạn" aria-label="Username" value="<?php echo $result['facebook']; ?>">
                                                                 </div>
-                                                                <input id="profile-facebook" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
                                                             </div>
-                                                        </div>
 
-                                                        <!-- Instagram -->
-                                                        <div class="form-group">
-                                                            <label class="small" for="profile-instagram">Instagram</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="btn btn-ico btn-secondary btn-minimal">
-                                                                        <i class="fe-instagram"></i>
+                                                            <!-- Instagram -->
+                                                            <div class="form-group">
+                                                                <label class="small" for="profile-instagram">Instagram</label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="btn btn-ico btn-secondary btn-minimal">
+                                                                            <i class="fe-instagram"></i>
+                                                                        </div>
                                                                     </div>
+                                                                    <input name="instagram" id="profile-instagram" type="text" class="form-control form-control-lg" placeholder="Nhập Instagram của bạn" aria-label="Username" value="<?php echo $result['instagram']; ?>">
                                                                 </div>
-                                                                <input id="profile-instagram" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
                                                             </div>
-                                                        </div>
 
-                                                        <!-- Github -->
-                                                        <div class="form-group">
-                                                            <label class="small" for="profile-github">Github</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="btn btn-ico btn-secondary btn-minimal">
-                                                                        <i class="fe-github"></i>
+                                                            <!-- Github -->
+                                                            <div class="form-group">
+                                                                <label class="small" for="profile-github">Github</label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="btn btn-ico btn-secondary btn-minimal">
+                                                                            <i class="fe-github"></i>
+                                                                        </div>
                                                                     </div>
+                                                                    <input name="github" id="profile-github" type="text" class="form-control form-control-lg" placeholder="Nhập Github của bạn" aria-label="Username" value="<?php echo $result['github']; ?>">
                                                                 </div>
-                                                                <input id="profile-github" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
                                                             </div>
-                                                        </div>
 
-                                                        <!-- Slack -->
-                                                        <div class="form-group">
-                                                            <label class="small" for="profile-slack">Slack</label>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="btn btn-ico btn-secondary btn-minimal">
-                                                                        <i class="fe-slack"></i>
+                                                            <!-- Slack -->
+                                                            <div class="form-group">
+                                                                <label class="small" for="profile-slack">Slack</label>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="btn btn-ico btn-secondary btn-minimal">
+                                                                            <i class="fe-slack"></i>
+                                                                        </div>
                                                                     </div>
+                                                                    <input name="slack" id="profile-slack" type="text" class="form-control form-control-lg" placeholder="Nhập Slack của bạn" aria-label="Username" value="<?php echo $result['slack']; ?>">
                                                                 </div>
-                                                                <input id="profile-slack" type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username">
                                                             </div>
-                                                        </div>
 
-                                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Save Preferences</button>
-                                                    </form>
+                                                            <button class="btn btn-lg btn-primary btn-block" type="submit" name="social">Cập nhật</button>
+                                                        </form>
+                                                    <?php } ?>
                                                 </div>
                                             </div><!-- .collapse -->
 

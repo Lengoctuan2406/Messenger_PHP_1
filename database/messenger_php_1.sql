@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2022 at 06:19 PM
+-- Generation Time: May 20, 2022 at 07:27 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -51,7 +51,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`account_id`, `account_name`, `avatar`, `country`, `phone`, `email`, `password`, `bio`, `twitter`, `facebook`, `instagram`, `github`, `slack`, `account_status`, `created_date`, `modified_date`) VALUES
-(1, 'Lê Ngọc Tuấn', '12.jpg', 'Hồ Chí Minh', '0984121999', 'lengoctuan2406@gmail.com', '123', 'Tôi là một người không thích cầu kì', NULL, 'https://www.facebook.com/willbebetterthannow/', NULL, 'https://github.com/Lengoctuan2406', NULL, 1, '2022-05-19', '2022-05-19'),
+(1, 'Lê Ngọc Tuấn', '12.jpg', 'Hồ Chí Minh', '0984121999', 'lengoctuan2406@gmail.com', '1', 'Tôi là một người không thích cầu kì', 'https://twitter.com', 'https://www.facebook.com/willbebetterthannow/', '', 'https://github.com/Lengoctuan2406', '', 1, '2022-05-19', '2022-05-19'),
 (2, 'Huỳnh Thị Như Phương', '12.jpg', 'Hồ Chí Minh', '0982334556', 'huynhthinhuphuong@gmail.com', '123456789', 'Người cá tính mạnh', NULL, NULL, NULL, NULL, NULL, 1, '2022-05-19', '2022-05-19'),
 (3, 'Lê Bích Ngọc', '12.jpg', 'Hồ Chí Minh', '0984121999', 'lebichngoc@gmail.com', '123456789', 'Không biết', NULL, 'https://www.facebook.com/willbebetterthannow/', NULL, NULL, NULL, 1, '2022-05-19', '2022-05-19'),
 (4, 'Lê Huỳnh Lan Hạ', '12.jpg', 'Hồ Chí Minh', '0982334533', 'lehuynhlanha@gmail.com', '123456789', 'Không biết nữa', NULL, NULL, NULL, NULL, NULL, 1, '2022-05-19', '2022-05-19');
@@ -68,6 +68,18 @@ CREATE TABLE `chats` (
   `name_chat_with` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_date` date NOT NULL DEFAULT current_timestamp(),
   `modified_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `friends`
+--
+
+CREATE TABLE `friends` (
+  `friend_id` int(5) NOT NULL,
+  `account_id` int(5) DEFAULT NULL,
+  `account_friend_id` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -109,6 +121,12 @@ ALTER TABLE `chats`
   ADD PRIMARY KEY (`chat_id`);
 
 --
+-- Indexes for table `friends`
+--
+ALTER TABLE `friends`
+  ADD PRIMARY KEY (`friend_id`);
+
+--
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
@@ -129,6 +147,12 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `chats`
   MODIFY `chat_id` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `friends`
+--
+ALTER TABLE `friends`
+  MODIFY `friend_id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `status`
