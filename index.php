@@ -9,7 +9,7 @@ include('handling/index.php');
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
         <title>Messenger</title>
         <!-- Template core CSS -->
-        <link href="assets\css\template.min.css" rel="stylesheet">
+        <link href="assets\css\<?php echo $_SESSION['demo']; ?>" rel="stylesheet">
     </head>
     <!-- Head -->
     <body>
@@ -1169,43 +1169,8 @@ include('handling/index.php');
                                 <div class="container-fluid py-6">
 
                                     <!-- Title -->
-                                    <h2 class="font-bold mb-6">Demos</h2>
+                                    <h2 class="font-bold mb-6">Giao diện</h2>
                                     <!-- Title -->
-
-                                    <!-- Search -->
-                                    <form class="mb-6">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control form-control-lg" placeholder="Search for messages or users..." aria-label="Search for messages or users...">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
-                                                    <i class="fe-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- Search -->
-
-                                    <!-- Card -->
-                                    <div class="card mb-6">
-                                        <div class="card-body">
-
-                                            <div class="media align-items-center">
-                                                <div class="mr-5">
-                                                    <img src="assets\images\brand.svg" class="fill-primary" data-inject-svg="" alt="" style="height: 46px; width: 46px;">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="mb-0">
-                                                        <a href="documentation\index.html" class="text-basic-inverse stretched-link">Documentation</a>
-                                                    </h5>
-                                                    <p>Quick setup and build tools.</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <!-- Card -->
-
-                                    <h5 class="my-6">Chat Pages:</h5>
 
                                     <!-- Card -->
                                     <div class="card mb-6">
@@ -1213,10 +1178,10 @@ include('handling/index.php');
                                         <div class="card-body border-top">
                                             <div class="media">
                                                 <div class="media-body">
-                                                    <h5 class="mb-0">Light mode</h5>
+                                                    <h5 class="mb-0">Chế độ nền sáng</h5>
                                                 </div>
                                                 <div class="align-self-center">
-                                                    <a href="index.htm" class="text-muted stretched-link">
+                                                    <a href="index.php?demo=template.min.css" class="text-muted stretched-link">
                                                         <i class="fe-link"></i>
                                                     </a>
                                                 </div>
@@ -1231,10 +1196,10 @@ include('handling/index.php');
                                         <div class="card-body border-top">
                                             <div class="media">
                                                 <div class="media-body">
-                                                    <h5 class="mb-0">Dark mode</h5>
+                                                    <h5 class="mb-0">Chế độ nền tối</h5>
                                                 </div>
                                                 <div class="align-self-center">
-                                                    <a href="..\demo-dark\index.htm" class="text-muted stretched-link">
+                                                    <a href="index.php?demo=template.dark.min.css" class="text-muted stretched-link">
                                                         <i class="fe-link"></i>
                                                     </a>
                                                 </div>
@@ -1242,63 +1207,6 @@ include('handling/index.php');
                                         </div>
                                     </div>
                                     <!-- Card -->
-
-                                    <h5 class="my-6">Account Pages:</h5>
-
-                                    <!-- Card -->
-                                    <div class="card mb-6">
-                                        <img class="card-img-top" alt="" src="assets\images\demos\sign-in-dark.jpg">
-                                        <div class="card-body border-top">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h5 class="mb-0">Sign In</h5>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <a href="signin.html" class="text-muted stretched-link">
-                                                        <i class="fe-link"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card -->
-
-                                    <!-- Card -->
-                                    <div class="card mb-6">
-                                        <img class="card-img-top" alt="" src="assets\images\demos\sign-up-dark.jpg">
-                                        <div class="card-body border-top">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h5 class="mb-0">Sign Up</h5>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <a href="signup.html" class="text-muted stretched-link">
-                                                        <i class="fe-link"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card -->
-
-                                    <!-- Card -->
-                                    <div class="card mb-6">
-                                        <img class="card-img-top" alt="" src="assets\images\demos\password-reset-dark.jpg">
-                                        <div class="card-body border-top">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h5 class="mb-0">Password Reset</h5>
-                                                </div>
-                                                <div class="align-self-center">
-                                                    <a href="password-reset.html" class="text-muted stretched-link">
-                                                        <i class="fe-link"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card -->
-
                                 </div>
                             </div>
                         </div>
@@ -1311,21 +1219,8 @@ include('handling/index.php');
                                 <div class="container-fluid py-6">
 
                                     <!-- Title -->
-                                    <h2 class="font-bold mb-6">Profile</h2>
+                                    <h2 class="font-bold mb-6">Thông tin cá nhân</h2>
                                     <!-- Title -->
-
-                                    <!-- Search -->
-                                    <form class="mb-6">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control form-control-lg" placeholder="Search for messages or users..." aria-label="Search for messages or users...">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
-                                                    <i class="fe-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- Search -->
                                     <?php
                                     while ($result = mysqli_fetch_array($query_user)) {
                                         ?>
@@ -1463,13 +1358,12 @@ include('handling/index.php');
                                             </div>
                                         </div>
                                         <!-- Card -->
-                                    <?php } ?>
                                     <div class="form-row">
                                         <div class="col">
                                             <!-- Button -->
                                             <a href="settings.php">
                                                 <button type="button" class="btn btn-lg btn-block btn-basic d-flex align-items-center">
-                                                    Settings
+                                                    Cài đặt
                                                     <span class="fe-settings ml-auto"></span>
                                                 </button>
                                             </a>
@@ -1479,7 +1373,7 @@ include('handling/index.php');
                                             <!-- Button -->
                                             <a href="handling/signout.php">
                                                 <button type="button" class="btn btn-lg btn-block btn-basic d-flex align-items-center">
-                                                    Logout
+                                                    Đăng xuất
                                                     <span class="fe-log-out ml-auto"></span>
                                                 </button>
                                             </a>
@@ -1501,17 +1395,18 @@ include('handling/index.php');
                     <div class="container-xxl">
 
                         <div class="avatar avatar-lg mb-5">
-                            <img class="avatar-img" src="assets\images\avatars\12.jpg" alt="">
+                            <img class="avatar-img" src="assets\images\avatars\<?php echo $result['avatar']; ?>" alt="">
                         </div>
 
-                        <h6>Hey, Matthew!</h6>
-                        <p>Please select a chat to start messaging.</p>
+                        <h6>Chào, <?php echo $result['account_name']; ?></h6>
+                        <p>Hãy chọn người bạn muốn trò chuyện ngay bây giờ!</p>
                     </div>
                 </div>
                 <!-- Default Page -->
             </div>
             <!-- Main Content -->
         </div>
+        <?php } ?>
         <!-- Layout -->
         <!-- DropzoneJS: Template -->
         <div id="dropzone-template-js">

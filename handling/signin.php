@@ -1,4 +1,7 @@
-<?php session_start();
+<?php
+
+session_start();
+$_SESSION['demo']='template.min.css';
 include('database/connect.php');
 
 // code của login
@@ -11,7 +14,6 @@ function test_input($data) {
 
 if (isset($_POST['login'])) {
     $email = test_input($_POST['email']);
-    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     // kiểm tra email có hợp lệ
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
         $password = test_input($_POST['password']);
@@ -20,6 +22,7 @@ if (isset($_POST['login'])) {
         if ($num > 0) {
             $_SESSION['account_id'] = $num['account_id'];
             $_SESSION['account_name'] = $num['account_name'];
+            $ret1 = mysqli_query($con, "UPDATE accounts SET account_status=2 WHERE account_id='" . $_SESSION['account_id'] . "';");
             header("location:index.php");
         } else {
             echo "<script>alert('Mật khẩu hoặc tài khoản không chính xác!');</script>";

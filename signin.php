@@ -9,7 +9,7 @@ include('handling/signin.php');
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
         <title>Messenger</title>
         <!-- file css -->
-        <link href="assets\css\template.min.css" rel="stylesheet">
+        <link href="assets\css\<?php echo $_SESSION['demo']; ?>" rel="stylesheet">
     </head>
     <!-- Head -->
     <body>
@@ -41,7 +41,7 @@ include('handling/signin.php');
                         </form>
                         <!-- Text -->
                         <p class="text-center">
-                            Bạn chưa có tài khoản <a href="signup.html">Đăng kí</a>.
+                            Bạn chưa có tài khoản <a href="signup.php">Đăng kí</a>.
                         </p>
                     </div>
                 </div> <!-- / .row -->

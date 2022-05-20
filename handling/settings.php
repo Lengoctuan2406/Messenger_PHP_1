@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+if (strlen($_SESSION['account_id'] == 0)) {
+    header('location:signin.php');
+}
 include('database/connect.php');
 
 // xóa kí tự đặc biệt
@@ -36,7 +39,9 @@ if (isset($_POST['change_pass'])) {
             $ret = mysqli_query($con, "SELECT * FROM accounts where password='" . $current_password . "' and account_id='" . $_SESSION['account_id'] . "';");
             $num = mysqli_fetch_array($ret);
             if ($num > 0) {
-                $ret1 = mysqli_query($con, "UPDATE accounts SET password='" . $new_password . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $currentTime = date('Y-m-d', time());
+                $ret1 = mysqli_query($con, "UPDATE accounts SET password='" . $new_password . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
                 if ($ret1) {
                     echo "<script>alert('Cập nhật mật khẩu thành công!');</script>";
                 } else {
@@ -52,7 +57,7 @@ if (isset($_POST['change_pass'])) {
 }
 
 if (isset($_POST['social'])) {
-    $count = 0;
+    $allowUpload = true;
     $twitter = $_POST['twitter'];
     $facebook = $_POST['facebook'];
     $instagram = $_POST['instagram'];
@@ -61,53 +66,63 @@ if (isset($_POST['social'])) {
     if (!empty($twitter)) {
         if (!filter_var($twitter, FILTER_VALIDATE_URL)) {
             echo "<script>alert('Đường dẫn Twitter không hợp lệ!');</script>";
-            $count++;
+            $allowUpload = false;
         } else {
             if (!preg_match('/twitter/i', $twitter)) {
                 echo "<script>alert('Đường dẫn Twitter không đúng trang chủ!');</script>";
-                $count++;
+                $allowUpload = false;
             }
         }
     }
     if (!empty($facebook)) {
         if (!filter_var($facebook, FILTER_VALIDATE_URL)) {
             echo "<script>alert('Đường dẫn Facebook không hợp lệ!');</script>";
-            $count++;
-        } elseif (filter_var($facebook, FILTER_VALIDATE_URL) && !preg_match('/facebook/i', $facebook)) {
-            echo "<script>alert('Đường dẫn Facbook không đúng trang chủ!');</script>";
-            $count++;
+            $allowUpload = false;
+        } else {
+            if (!preg_match('/facebook/i', $facebook)) {
+                echo "<script>alert('Đường dẫn Facbook không đúng trang chủ!');</script>";
+                $allowUpload = false;
+            }
         }
     }
     if (!empty($instagram)) {
         if (!filter_var($instagram, FILTER_VALIDATE_URL)) {
             echo "<script>alert('Đường dẫn Instagram không hợp lệ!');</script>";
-            $count++;
-        } elseif (filter_var($instagram, FILTER_VALIDATE_URL) && !preg_match('/instagram/i', $instagram)) {
-            echo "<script>alert('Đường dẫn Instagram không đúng trang chủ!');</script>";
-            $count++;
+            $allowUpload = false;
+        } else {
+            if (!preg_match('/instagram/i', $instagram)) {
+                echo "<script>alert('Đường dẫn Instagram không đúng trang chủ!');</script>";
+                $allowUpload = false;
+            }
         }
     }
     if (!empty($github)) {
         if (!filter_var($github, FILTER_VALIDATE_URL)) {
             echo "<script>alert('Đường dẫn Github không hợp lệ!');</script>";
-            $count++;
-        } elseif (filter_var($github, FILTER_VALIDATE_URL) && !preg_match('/github/i', $github)) {
-            echo "<script>alert('Đường dẫn Github không đúng trang chủ!');</script>";
-            $count++;
+            $allowUpload = false;
+        } else {
+            if (!preg_match('/github/i', $github)) {
+                echo "<script>alert('Đường dẫn Github không đúng trang chủ!');</script>";
+                $allowUpload = false;
+            }
         }
     }
     if (!empty($slack)) {
         if (!filter_var($slack, FILTER_VALIDATE_URL)) {
             echo "<script>alert('Đường dẫn Slack không hợp lệ!');</script>";
-            $count++;
-        } elseif (filter_var($slack, FILTER_VALIDATE_URL) && !preg_match('/slack/i', $slack)) {
-            echo "<script>alert('Đường dẫn Slack không đúng trang chủ!');</script>";
-            $count++;
+            $allowUpload = false;
+        } else {
+            if (!preg_match('/slack/i', $slack)) {
+                echo "<script>alert('Đường dẫn Slack không đúng trang chủ!');</script>";
+                $allowUpload = false;
+            }
         }
     }
-    if ($count == 0) {
+    if ($allowUpload) {
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $currentTime = date('Y-m-d', time());
         $ret = mysqli_query($con, "UPDATE accounts SET twitter='" . $twitter . "', facebook='" . $facebook .
-                "', instagram='" . $instagram . "', github='" . $github . "', slack='" . $slack . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
+                "', instagram='" . $instagram . "', github='" . $github . "', slack='" . $slack . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
         if ($ret) {
             echo "<script>alert('Cập nhật thành công!');</script>";
         } else {
@@ -115,6 +130,111 @@ if (isset($_POST['social'])) {
         }
     }
 }
+// cập nhật thông tin cá nhân
+if (isset($_POST['change_info'])) {
+    $file = $_POST['file'];
+    $account_name = $_POST['account_name'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $bio = $_POST['bio'];
+
+    $allowUpload = true;
+    // kiểm tra dữ liệu ảnh đã upload chưa
+    if (strlen($_FILES["fileupload"]["name"])==0) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            if (preg_match('/^[0-9]+$/', $phone)) {
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $currentTime = date('Y-m-d', time());
+                $ret = mysqli_query($con, "UPDATE accounts SET account_name='" . $account_name . "', avatar='" . $file . "', "
+                        . "phone='" . $phone . "', email='" . $email . "', bio='" . $bio . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
+                if ($ret) {
+                    echo "<script>alert('Cập nhật thành công!');</script>";
+                } else {
+                    echo "<script>alert('Cập nhật không thành công!');</script>";
+                }
+            } else {
+                echo "<script>alert('Số điện thoại không đúng định dạng!');</script>";
+            }
+        } else {
+            echo "<script>alert('Email không đúng định dạng!');</script>";
+        }
+    } else {
+        //Thư mục bạn sẽ lưu file upload
+        $target_dir = "assets/images/avatars/";
+
+        //Vị trí file lưu tạm trong server (file sẽ lưu trong uploads, với tên giống tên ban đầu)
+        $target_file = $target_dir . basename($_FILES["fileupload"]["name"]);
+
+        //Lấy phần mở rộng của file (jpg, png, ...)
+        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+        // Cỡ lớn nhất được upload (bytes)
+        $maxfilesize = 3000000;
+
+        ////Những loại file được phép upload
+        $allowtypes = array('jpg', 'png', 'jpeg', 'gif');
+
+        //Kiểm tra xem có phải là ảnh bằng hàm getimagesize
+        $check = getimagesize($_FILES["fileupload"]["tmp_name"]);
+        if ($check !== false) {
+            echo "<script>alert('Đây là file ảnh - " . $check["mime"] . "!');</script>";
+            $allowUpload = true;
+        } else {
+            echo "<script>alert('Không phải file ảnh!');</script>";
+            $allowUpload = false;
+        }
+
+        // Kiểm tra nếu file đã tồn tại thì không cho phép ghi đè
+        // Bạn có thể phát triển code để lưu thành một tên file khác
+        if (file_exists($target_file)) {
+            echo "<script>alert('Tên file đã tồn tại trên server, không được ghi đè!');</script>";
+            $allowUpload = false;
+        }
+        // Kiểm tra kích thước file upload cho vượt quá giới hạn cho phép
+        if ($_FILES["fileupload"]["size"] > $maxfilesize) {
+            echo "<script>alert('Không được upload ảnh lớn hơn 3mb!');</script>";
+            $allowUpload = false;
+        }
+
+        // Kiểm tra kiểu file
+        if (!in_array($imageFileType, $allowtypes)) {
+            echo "<script>alert('Chỉ được upload các định dạng JPG, PNG, JPEG, GIF!');</script>";
+            $allowUpload = false;
+        }
+
+        if ($allowUpload) {
+            // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
+            if (move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file)) {
+                //xóa đường dẫn file ảnh hiện tại
+                $ret1 = mysqli_query($con, "SELECT * FROM accounts WHERE account_id='" . $_SESSION['account_id'] . "';");
+                $num1 = mysqli_fetch_array($ret1);
+                $status = unlink('assets/images/avatars/' . $num1['avatar']);
+
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+                    if (preg_match('/^[0-9]+$/', $phone)) {
+                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $currentTime = date('Y-m-d', time());
+                        $ret = mysqli_query($con, "UPDATE accounts SET account_name='" . $account_name . "', avatar='" . basename($_FILES["fileupload"]["name"]) . "', "
+                                . "phone='" . $phone . "', email='" . $email . "', bio='" . $bio . "', modified_date='" . $currentTime . "' WHERE account_id='" . $_SESSION['account_id'] . "';");
+                        if ($ret) {
+                            echo "<script>alert('Cập nhật thành công!');</script>";
+                        } else {
+                            echo "<script>alert('Cập nhật không thành công!');</script>";
+                        }
+                    } else {
+                        echo "<script>alert('Số điện thoại không đúng định dạng!');</script>";
+                    }
+                } else {
+                    echo "<script>alert('Email không đúng định dạng!');</script>";
+                }
+            } else {
+                echo "Có lỗi xảy ra khi upload file!";
+            }
+        } else {
+            echo "Không upload được file, có thể do file lớn, kiểu file không đúng!";
+        }
+    }
+}
 
 // query bảng accounts
-$query_user = mysqli_query($con, "SELECT * FROM accounts where account_id='" . $_SESSION['account_id'] . "';");
+$query_user = mysqli_query($con, "SELECT * FROM accounts WHERE account_id='" . $_SESSION['account_id'] . "';");
