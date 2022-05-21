@@ -5,6 +5,7 @@ session_start();
 if (strlen($_SESSION['account_id'] == 0)) {
     header('location:signin.php');
 }
+//kết nối database
 include('database/connect.php');
 
 // xóa kí tự đặc biệt
@@ -236,6 +237,3 @@ if (isset($_POST['change_info'])) {
         }
     }
 }
-
-//query bảng accounts
-$query_user = mysqli_query($con, "SELECT * FROM accounts WHERE account_id='" . $_SESSION['account_id'] . "';");

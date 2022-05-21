@@ -1,5 +1,5 @@
 <?php
-include('handling/signup.php');
+include('handling/handling_signup.php');
 ?>
 ﻿<!DOCTYPE html>
 <html lang="en">

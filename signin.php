@@ -1,5 +1,5 @@
 <?php
-include('handling/signin.php');
+include('handling/handling_signin.php');
 ?>
 ﻿<!DOCTYPE html>
 <html lang="en">
@@ -34,7 +34,7 @@ include('handling/signin.php');
                                 <input type="password" class="form-control form-control-lg" name="password" placeholder="Nhập password">
                             </div>
                             <div class="form-group d-flex justify-content-between">
-                                <a href="password-reset.html">Quên mật khẩu</a>
+                                <a href="password_reset.php">Quên mật khẩu</a>
                             </div>
                             <!-- Submit -->
                             <button class="btn btn-lg btn-block btn-primary" type="submit" name="login">Đăng nhập</button>

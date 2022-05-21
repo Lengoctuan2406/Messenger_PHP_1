@@ -1,5 +1,5 @@
 <?php
-include('handling/settings.php');
+include('handling/handling_settings.php');
 ?>
 ﻿<!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,9 @@ include('handling/settings.php');
     <!-- Head -->
     <body>
         <?php
-        while ($result = mysqli_fetch_array($query_user)) {
+        //lấy bảng accounts ra
+        $query_users = mysqli_query($con, "SELECT * FROM accounts WHERE account_id='" . $_SESSION['account_id'] . "';");
+        while ($result = mysqli_fetch_array($query_users)) {
             ?>
             <div class="layout">
                 <!-- Navigation -->
