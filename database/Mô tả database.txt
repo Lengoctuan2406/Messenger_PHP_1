@@ -1,0 +1,39 @@
+MÔ TẢ DATABASE CỦA SIÊU THỊ THÚ CƯNG:
+create table accounts (
+	account_id int(5) primary key AUTO_INCREMENT,
+	account_name varchar(20),
+	country varchar(50),
+	phone varchar(10),
+	email varchar(20),
+	password varchar(20),
+	bio text,
+	twitter varchar(50),
+	facebook varchar(50),
+	instagram varchar(50),
+	github varchar(50),
+	slack varchar(50),
+	account_status int(1),
+	created_date datetime,
+	modified_date datetime
+);
+
+create table chats (
+	chat_id int(5) primary key AUTO_INCREMENT,	
+	account_id int(5),
+	name_chat_with varchar(50),
+	created_date datetime,
+	modified_date datetime
+);
+
+create table status (
+	status_id int(5) primary key AUTO_INCREMENT,
+	status_name varchar(20)
+);
+
+create table chat_..._... (
+	id int(50) primary key AUTO_INCREMENT,
+	account_id int(5),
+	text mediumtext,
+	account_status int(5),
+	created_date datetime
+);
